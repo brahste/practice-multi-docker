@@ -11,8 +11,14 @@ script:
 
 after_success:
   - docker build -t brahste/multi-client ./client
-  - docker build -t brahste/multi-nginx ./client
-  - docker build -t brahste/multi-server ./client
-  - docker build -t brahste/multi-worker ./client
-
+  - docker build -t brahste/multi-nginx ./nginx
+  - docker build -t brahste/multi-server ./server
+  - docker build -t brahste/multi-worker ./worker
+  # Login to Docker Hub
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Push images to docker hub
+  - docker push brahste/multi-client
+  - docker push brahste/multi-nginx
+  - docker push brahste/multi-server
+  - docker push brahste/multi-worker
 
